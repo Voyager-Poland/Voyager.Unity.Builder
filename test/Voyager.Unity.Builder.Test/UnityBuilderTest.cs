@@ -78,6 +78,12 @@ namespace Voyager.Unity.Builder.Test
 
 	public class ExampleClass : IExampleInterface
 	{
+		public ExampleClass() { }
+		public ExampleClass(string jakisParam)
+		{
+			JakisParam = jakisParam;
+		}
 
+		public string JakisParam { get; }
 	}
 }
