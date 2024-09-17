@@ -14,8 +14,10 @@ namespace Voyager.Unity.Builder.Test
 		[Test]
 		public void EmptyServicCollection()
 		{
-
-			Assert.Pass();
+			var unity = service.CreateBuilder(null);
+			Assert.That(unity, Is.Not.Null);
+			var provider = service.CreateServiceProvider(unity);
+			Assert.That(provider, Is.Not.Null);
 		}
 	}
 }

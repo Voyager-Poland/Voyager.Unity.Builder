@@ -4,16 +4,17 @@ using Unity;
 
 namespace Voyager.Unity.Builder
 {
-	public class UnityBuilder : Microsoft.Extensions.DependencyInjection.IServiceProviderFactory<IUnityContainer>
+	public partial class UnityBuilder : Microsoft.Extensions.DependencyInjection.IServiceProviderFactory<IUnityContainer>
 	{
 		public IUnityContainer CreateBuilder(IServiceCollection services)
 		{
-			throw new NotImplementedException();
+			UnityContainer unity = new UnityContainer();
+			return unity;
 		}
 
 		public IServiceProvider CreateServiceProvider(IUnityContainer containerBuilder)
 		{
-			throw new NotImplementedException();
+			return new MyServiceProvider(containerBuilder);
 		}
 	}
 }
