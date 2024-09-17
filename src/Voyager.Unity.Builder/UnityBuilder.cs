@@ -20,6 +20,10 @@ namespace Voyager.Unity.Builder
 						MyCallFactory myCallFactory = new MyCallFactory(unity, this, description.ImplementationFactory);
 						unity.RegisterFactory(description.ServiceType, myCallFactory.Call, factoryLifetimeManager);
 					}
+					else if (description.ImplementationInstance != null)
+					{
+						unity.RegisterInstance(description.ServiceType, description.ImplementationInstance);
+					}
 					else
 					{
 

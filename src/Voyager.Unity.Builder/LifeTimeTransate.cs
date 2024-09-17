@@ -3,7 +3,7 @@ using Unity.Lifetime;
 
 namespace Voyager.Unity.Builder
 {
-	class LifeTimeTransate : LifetimeManager, IFactoryLifetimeManager, ITypeLifetimeManager
+	class LifeTimeTransate : LifetimeManager, IFactoryLifetimeManager, ITypeLifetimeManager, IInstanceLifetimeManager
 	{
 		private ServiceLifetime lifetime;
 

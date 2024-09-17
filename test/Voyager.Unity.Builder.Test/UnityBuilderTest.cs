@@ -39,6 +39,31 @@ namespace Voyager.Unity.Builder.Test
 		}
 
 		[Test]
+		public void SingletonType()
+		{
+			serviceDescriptors.AddSingleton<ExampleClass>();
+			var result = PrepareUnit(serviceDescriptors);
+			TestType<ExampleClass>(result);
+		}
+
+		[Test]
+		public void SingletonKeyType()
+		{
+			serviceDescriptors.AddSingleton<IExampleInterface, ExampleClass>();
+			var result = PrepareUnit(serviceDescriptors);
+			TestType<IExampleInterface>(result);
+		}
+
+		[Test]
+		public void TransistientInstance()
+		{
+			serviceDescriptors.AddSingleton(new ExampleClass("innna"));
+			var result = PrepareUnit(serviceDescriptors);
+			ExampleClass klasa = result.ServiceProvicer.GetService<ExampleClass>()!;
+			TestType<ExampleClass>(result);
+		}
+
+		[Test]
 		public void TransistientRegisterFactory()
 		{
 			serviceDescriptors.AddTransient<IExampleInterface>(sp =>
