@@ -19,7 +19,7 @@
 		<Keyword>UnityContainer;DependencyInjection;ServiceProvider;ServiceCollection</Keyword>
 		<Authors>Andrzej Świstowski</Authors>
 		<Description>The library supporting migration from the UnityContainer to the DependencyInjection</Description>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<SignAssembly>True</SignAssembly>
 		<DelaySign>False</DelaySign>
 		<AssemblyOriginatorKeyFile>unity.snk</AssemblyOriginatorKeyFile>
