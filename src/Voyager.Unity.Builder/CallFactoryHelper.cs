@@ -9,16 +9,15 @@ namespace Voyager.Unity.Builder
 		private readonly UnityBuilder unityBuilder;
 		private Func<IServiceProvider, object> implementationFactory;
 
-		public CallFactoryHelper(IUnityContainer unity, UnityBuilder unityBuilder, Func<IServiceProvider, object> implementationFactory)
+		public CallFactoryHelper(IUnityContainer unity, Func<IServiceProvider, object> implementationFactory)
 		{
 			this.unity = unity;
-			this.unityBuilder = unityBuilder;
 			this.implementationFactory = implementationFactory;
 		}
 
 		internal object Call(IUnityContainer container)
 		{
-			var serviceProvider = unityBuilder.CreateServiceProvider(unity);
+			var serviceProvider = unity.Resolve<IServiceProvider>();
 			return implementationFactory(serviceProvider);
 		}
 	}
