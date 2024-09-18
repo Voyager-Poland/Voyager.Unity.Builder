@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using Unity;
+using Unity.Interception;
 
 namespace Voyager.Unity.Builder
 {
@@ -32,6 +33,8 @@ namespace Voyager.Unity.Builder
 		}
 
 		public void AddDiagnostic() => unity.AddExtension(new Diagnostic());
+
+		public void AddInterception() => unity.AddNewExtension<Interception>();
 
 	}
 }

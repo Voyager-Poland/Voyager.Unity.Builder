@@ -14,6 +14,8 @@ namespace Voyager.Unity.Builder.Test
 		public void Setup()
 		{
 			service = new Voyager.Unity.Builder.UnityBuilder();
+			service.AddDiagnostic();
+			service.AddInterception();
 			serviceDescriptors = new ServiceCollection();
 		}
 
