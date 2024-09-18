@@ -15,42 +15,23 @@ namespace Voyager.Unity.Builder
 		public IUnityContainer CreateBuilder(IServiceCollection services)
 		{
 			RegisterServiceProvider();
-
 			if (services != null)
-			{
 				foreach (var description in services)
-				{
 					Register(description);
-				}
-
-			}
 			return unity;
 		}
 
-		private void Register(ServiceDescriptor description)
-		{
-			var registerProces = new RegisterProces(description, unity);
-			registerProces.Register();
+		private void Register(ServiceDescriptor description) => new RegisterProces(description, unity).Register();
 
-		}
-
-		public IServiceProvider CreateServiceProvider(IUnityContainer containerBuilder)
-		{
-			return containerBuilder.Resolve<IServiceProvider>();
-		}
+		public IServiceProvider CreateServiceProvider(IUnityContainer containerBuilder) => containerBuilder.Resolve<IServiceProvider>();
 
 		private void RegisterServiceProvider()
 		{
 			unity.RegisterType<IServiceProvider, VoyServiceProvider>();
-			unity.RegisterFactory<Microsoft.Extensions.DependencyInjection.IServiceScopeFactory>(unc =>
-			{
-				return new ScopeFactory(unc);
-			});
+			unity.RegisterFactory<Microsoft.Extensions.DependencyInjection.IServiceScopeFactory>(unc => new ScopeFactory(unc));
 		}
 
-		public void AddDiagnostic()
-		{
-			unity.AddExtension(new Diagnostic());
-		}
+		public void AddDiagnostic() => unity.AddExtension(new Diagnostic());
+
 	}
 }
