@@ -52,6 +52,15 @@ namespace Voyager.Unity.Builder.Test
 			serviceDescriptors.AddSingleton<IExampleInterface, ExampleClass>();
 			var result = PrepareUnit(serviceDescriptors);
 			TestType<IExampleInterface>(result);
+
+			TwoObjectAreEqual(result);
+		}
+
+		private static void TwoObjectAreEqual(TestResult result)
+		{
+			var obj1 = result.Unity.Resolve<IExampleInterface>();
+			var obj2 = result.Unity.Resolve<IExampleInterface>();
+			Assert.That(obj1.Key, Is.EqualTo(obj2.Key));
 		}
 
 		[Test]
@@ -65,6 +74,9 @@ namespace Voyager.Unity.Builder.Test
 				var scopedControl = scopeControl.ServiceProvider.GetService<IExampleInterface>();
 				Assert.IsNotNull(scopedControl);
 				Assert.That(ExampleClass.anyDisposed, Is.False, "Test isn't well prepared");
+
+
+				TwoObjectAreEqual(result);
 			}
 			Assert.That(ExampleClass.anyDisposed, Is.True, "Scope i");
 		}
@@ -87,6 +99,8 @@ namespace Voyager.Unity.Builder.Test
 			});
 			var result = PrepareUnit(serviceDescriptors);
 			TestType<IExampleInterface>(result);
+
+			TwoObjectAreNotEqual(result);
 		}
 
 
@@ -96,6 +110,15 @@ namespace Voyager.Unity.Builder.Test
 			serviceDescriptors.AddTransient<IExampleInterface, ExampleClass>();
 			var result = PrepareUnit(serviceDescriptors);
 			TestType<IExampleInterface>(result);
+
+			TwoObjectAreNotEqual(result);
+		}
+
+		private static void TwoObjectAreNotEqual(TestResult result)
+		{
+			var obj1 = result.Unity.Resolve<IExampleInterface>();
+			var obj2 = result.Unity.Resolve<IExampleInterface>();
+			Assert.That(obj1.Key, Is.Not.EqualTo(obj2.Key));
 		}
 
 		private static void TestType<T>(TestResult result)

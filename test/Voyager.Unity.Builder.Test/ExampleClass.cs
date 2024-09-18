@@ -4,13 +4,19 @@
 	{
 		internal static bool anyDisposed = false;
 
-		public ExampleClass() { }
+		public ExampleClass()
+		{
+
+		}
 		public ExampleClass(string jakisParam)
 		{
+
 			JakisParam = jakisParam;
 		}
 
 		public string JakisParam { get; }
+
+		public Guid Key { get; } = Guid.NewGuid();
 
 		public void Dispose()
 		{
