@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
 using Unity;
 using Unity.Lifetime;
 
@@ -18,7 +17,6 @@ namespace Voyager.Unity.Builder
 
 		internal void Register()
 		{
-
 			if (description.ImplementationFactory != null)
 			{
 				IFactoryLifetimeManager factoryLifetimeManager = new LifeTimeTransate(description.Lifetime);
@@ -26,30 +24,21 @@ namespace Voyager.Unity.Builder
 				unity.RegisterFactory(description.ServiceType, myCallFactory.Call, factoryLifetimeManager);
 			}
 			else if (description.ImplementationType != null)
-			{
-				ITypeLifetimeManager lifeLiem = new LifeTimeTransate(description.Lifetime);
 				unity.RegisterType(description.ServiceType, description.ImplementationType, GetLifetimeManager(description.Lifetime));
-			}
 			else
-			{
 				unity.RegisterInstance(description.ServiceType, description.ImplementationInstance);
-			}
-
 		}
-
 
 		private static ITypeLifetimeManager GetLifetimeManager(ServiceLifetime lifetime)
 		{
 			switch (lifetime)
 			{
 				case ServiceLifetime.Singleton:
-					return new ContainerControlledLifetimeManager(); // Singleton
+					return new ContainerControlledLifetimeManager();
 				case ServiceLifetime.Scoped:
-					return new HierarchicalLifetimeManager(); // Scoped
-				case ServiceLifetime.Transient:
-					return new TransientLifetimeManager(); // Transient
+					return new HierarchicalLifetimeManager();
 				default:
-					throw new ArgumentOutOfRangeException(nameof(lifetime), lifetime, null);
+					return new TransientLifetimeManager();
 			}
 		}
 	}
