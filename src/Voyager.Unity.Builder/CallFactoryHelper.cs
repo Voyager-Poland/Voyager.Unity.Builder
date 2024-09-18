@@ -3,13 +3,13 @@ using Unity;
 
 namespace Voyager.Unity.Builder
 {
-	internal class MyCallFactory
+	internal class CallFactoryHelper
 	{
 		private IUnityContainer unity;
 		private readonly UnityBuilder unityBuilder;
 		private Func<IServiceProvider, object> implementationFactory;
 
-		public MyCallFactory(IUnityContainer unity, UnityBuilder unityBuilder, Func<IServiceProvider, object> implementationFactory)
+		public CallFactoryHelper(IUnityContainer unity, UnityBuilder unityBuilder, Func<IServiceProvider, object> implementationFactory)
 		{
 			this.unity = unity;
 			this.unityBuilder = unityBuilder;

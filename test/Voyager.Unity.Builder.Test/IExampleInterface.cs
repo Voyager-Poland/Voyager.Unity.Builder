@@ -1,6 +1,6 @@
 ﻿namespace Voyager.Unity.Builder.Test
 {
-	public interface IExampleInterface
+	public interface IExampleInterface : IDisposable
 	{
 	}
 }

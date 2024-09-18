@@ -3,11 +3,11 @@ using Unity;
 
 namespace Voyager.Unity.Builder
 {
-	class MyServiceProvider : IServiceProvider
+	public class VoyServiceProvider : IServiceProvider
 	{
 		private IUnityContainer containerBuilder;
 
-		public MyServiceProvider(IUnityContainer containerBuilder)
+		public VoyServiceProvider(IUnityContainer containerBuilder)
 		{
 			this.containerBuilder = containerBuilder;
 		}

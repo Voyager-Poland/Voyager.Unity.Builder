@@ -55,6 +55,21 @@ namespace Voyager.Unity.Builder.Test
 		}
 
 		[Test]
+		public void ScopeKeyType()
+		{
+			serviceDescriptors.AddScoped<IExampleInterface, ExampleClass>();
+			var result = PrepareUnit(serviceDescriptors);
+			TestType<IExampleInterface>(result);
+			using (var scopeControl = result.ServiceProvicer.CreateScope())
+			{
+				var scopedControl = scopeControl.ServiceProvider.GetService<IExampleInterface>();
+				Assert.IsNotNull(scopedControl);
+				Assert.That(ExampleClass.anyDisposed, Is.False, "Test isn't well prepared");
+			}
+			Assert.That(ExampleClass.anyDisposed, Is.True, "Scope i");
+		}
+
+		[Test]
 		public void TransistientInstance()
 		{
 			serviceDescriptors.AddSingleton(new ExampleClass("innna"));
@@ -99,16 +114,5 @@ namespace Voyager.Unity.Builder.Test
 			return testResut;
 		}
 
-	}
-
-	public class ExampleClass : IExampleInterface
-	{
-		public ExampleClass() { }
-		public ExampleClass(string jakisParam)
-		{
-			JakisParam = jakisParam;
-		}
-
-		public string JakisParam { get; }
 	}
 }
