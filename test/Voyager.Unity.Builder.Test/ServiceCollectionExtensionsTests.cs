@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Unity;
 namespace Voyager.Unity.Builder.Test
 {
 	[TestFixture]
@@ -75,7 +76,47 @@ namespace Voyager.Unity.Builder.Test
 		}
 	}
 
+	[TestFixture]
+	public class ServiceCollectionExtensionsBuidTests
+	{
+		private IServiceCollection services;
+		private UnityBuilder builder;
 
+		[SetUp]
+		public void SetUp()
+		{
+			services = new ServiceCollection();
+			builder = new UnityBuilder();
+		}
+
+		[Test]
+		public void RegisterType_TFrom_TTo_RegistersTypesInUnityContainer()
+		{
+			// Arrange
+			services.RegisterType<IServiceA, ServiceA>();
+			var container = builder.CreateBuilder(services);
+
+			// Act
+			var resolvedInstance = container.Resolve<IServiceA>();
+
+			// Assert
+			Assert.IsInstanceOf<ServiceA>(resolvedInstance);
+		}
+
+		[Test]
+		public void RegisterType_TTo_RegistersSelfInUnityContainer()
+		{
+			// Arrange
+			services.RegisterType<ServiceA>();
+			var container = builder.CreateBuilder(services);
+
+			// Act
+			var resolvedInstance = container.Resolve<ServiceA>();
+
+			// Assert
+			Assert.IsInstanceOf<ServiceA>(resolvedInstance);
+		}
+	}
 
 	// Przykładowe klasy
 	public interface IServiceA { }

@@ -69,5 +69,11 @@ namespace Voyager.Unity.Builder
 			container.RegisterType(typeof(TFrom), typeof(TTo), ServiceLifetime.Transient);
 			return container;
 		}
+
+		public static IServiceCollection RegisterType<TTo>(this IServiceCollection container) where TTo : class
+		{
+			container.RegisterType(typeof(TTo), typeof(TTo), ServiceLifetime.Transient);
+			return container;
+		}
 	}
 }
