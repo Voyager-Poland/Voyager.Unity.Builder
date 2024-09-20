@@ -17,8 +17,8 @@ namespace Voyager.Unity.Builder.Test
 		public void RegisterType_RegistersTypeAsTransient_WhenLifetimeIsTransient()
 		{
 			// Arrange
-			Type registeredType = typeof(IServiceA);
-			Type mappedToType = typeof(ServiceA);
+			Type registeredType = typeof(IExampleInterface);
+			Type mappedToType = typeof(ExampleClass);
 			ServiceLifetime lifetime = ServiceLifetime.Transient;
 
 			// Act
@@ -35,8 +35,8 @@ namespace Voyager.Unity.Builder.Test
 		public void RegisterType_RegistersTypeAsSingleton_WhenLifetimeIsSingleton()
 		{
 			// Arrange
-			Type registeredType = typeof(IServiceA);
-			Type mappedToType = typeof(ServiceA);
+			Type registeredType = typeof(IExampleInterface);
+			Type mappedToType = typeof(ExampleClass);
 			ServiceLifetime lifetime = ServiceLifetime.Singleton;
 
 			// Act
@@ -53,7 +53,7 @@ namespace Voyager.Unity.Builder.Test
 		public void RegisterType_ThrowsArgumentNullException_WhenRegisteredTypeIsNull()
 		{
 			// Arrange
-			Type mappedToType = typeof(ServiceA);
+			Type mappedToType = typeof(ExampleClass);
 			ServiceLifetime lifetime = ServiceLifetime.Transient;
 
 			// Act & Assert
@@ -66,7 +66,7 @@ namespace Voyager.Unity.Builder.Test
 		public void RegisterType_ThrowsArgumentNullException_WhenMappedToTypeIsNull()
 		{
 			// Arrange
-			Type registeredType = typeof(IServiceA);
+			Type registeredType = typeof(IExampleInterface);
 			ServiceLifetime lifetime = ServiceLifetime.Transient;
 
 			// Act & Assert
@@ -93,33 +93,28 @@ namespace Voyager.Unity.Builder.Test
 		public void RegisterType_TFrom_TTo_RegistersTypesInUnityContainer()
 		{
 			// Arrange
-			services.RegisterType<IServiceA, ServiceA>();
+			services.RegisterType<IExampleInterface, ExampleClass>();
 			var container = builder.CreateBuilder(services);
 
 			// Act
-			var resolvedInstance = container.Resolve<IServiceA>();
+			var resolvedInstance = container.Resolve<IExampleInterface>();
 
 			// Assert
-			Assert.IsInstanceOf<ServiceA>(resolvedInstance);
+			Assert.IsInstanceOf<ExampleClass>(resolvedInstance);
 		}
 
 		[Test]
 		public void RegisterType_TTo_RegistersSelfInUnityContainer()
 		{
 			// Arrange
-			services.RegisterType<ServiceA>();
+			services.RegisterType<ExampleClass>();
 			var container = builder.CreateBuilder(services);
 
 			// Act
-			var resolvedInstance = container.Resolve<ServiceA>();
+			var resolvedInstance = container.Resolve<ExampleClass>();
 
 			// Assert
-			Assert.IsInstanceOf<ServiceA>(resolvedInstance);
+			Assert.IsInstanceOf<ExampleClass>(resolvedInstance);
 		}
 	}
-
-	// Przykładowe klasy
-	public interface IServiceA { }
-
-	public class ServiceA : IServiceA { }
 }

@@ -17,11 +17,11 @@ namespace Voyager.Unity.Builder.Test
 		public void RegisterInstance_AddsSingletonServiceDescriptor_WhenLifetimeIsSingleton()
 		{
 			// Arrange
-			var instance = new MyService();
-			Type registeredType = typeof(IMyService);
+			var instance = new ExampleClass();
+			Type registeredType = typeof(IExampleInterface);
 
 			// Act
-			services.RegisterInstance(registeredType, instance, ServiceLifetime.Singleton);
+			services.RegisterInstance(registeredType, instance);
 
 			// Assert
 			var serviceDescriptor = services.GetServiceDescriptorForType(registeredType);
@@ -31,48 +31,14 @@ namespace Voyager.Unity.Builder.Test
 		}
 
 		[Test]
-		public void RegisterInstance_AddsScopedServiceDescriptor_WhenLifetimeIsScoped()
-		{
-			// Arrange
-			var instance = new MyService();
-			Type registeredType = typeof(IMyService);
-
-			// Act
-			services.RegisterInstance(registeredType, instance, ServiceLifetime.Scoped);
-
-			// Assert
-			var serviceDescriptor = services.GetServiceDescriptorForType(registeredType);
-			Assert.NotNull(serviceDescriptor);
-			Assert.AreEqual(ServiceLifetime.Scoped, serviceDescriptor.Lifetime);
-			Assert.AreSame(instance, serviceDescriptor.ImplementationInstance);
-		}
-
-		[Test]
-		public void RegisterInstance_AddsTransientServiceDescriptor_WhenLifetimeIsTransient()
-		{
-			// Arrange
-			var instance = new MyService();
-			Type registeredType = typeof(IMyService);
-
-			// Act
-			services.RegisterInstance(registeredType, instance, ServiceLifetime.Transient);
-
-			// Assert
-			var serviceDescriptor = services.GetServiceDescriptorForType(registeredType);
-			Assert.NotNull(serviceDescriptor);
-			Assert.AreEqual(ServiceLifetime.Transient, serviceDescriptor.Lifetime);
-			Assert.AreSame(instance, serviceDescriptor.ImplementationInstance);
-		}
-
-		[Test]
 		public void RegisterInstance_ThrowsArgumentNullException_WhenRegisteredTypeIsNull()
 		{
 			// Arrange
-			var instance = new MyService();
+			var instance = new ExampleClass();
 
 			// Act & Assert
 			var ex = Assert.Throws<ArgumentNullException>(() =>
-					services.RegisterInstance(null, instance, ServiceLifetime.Singleton));
+					services.RegisterInstance(null, instance));
 			Assert.AreEqual("type", ex.ParamName);
 		}
 
@@ -80,21 +46,13 @@ namespace Voyager.Unity.Builder.Test
 		public void RegisterInstance_ThrowsArgumentNullException_WhenInstanceIsNull()
 		{
 			// Arrange
-			Type registeredType = typeof(IMyService);
+			Type registeredType = typeof(IExampleInterface);
 
 			// Act & Assert
 			var ex = Assert.Throws<ArgumentNullException>(() =>
-					services.RegisterInstance(registeredType, null, ServiceLifetime.Singleton));
+					services.RegisterInstance(registeredType, null));
 			Assert.AreEqual("instance", ex.ParamName);
 		}
 	}
-
-	// Pomocnicza metoda rozszerzająca do pobierania ServiceDescriptor
-
-	// Przykładowe interfejsy i klasy
-	public interface IMyService { }
-
-	public class MyService : IMyService { }
-
 }
 

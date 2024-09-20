@@ -38,28 +38,16 @@ namespace Voyager.Unity.Builder
 		public static IServiceCollection RegisterInstance(
 				this IServiceCollection services,
 				Type type,
-				object instance,
-				ServiceLifetime lifetime = ServiceLifetime.Singleton)
+				object instance)
 		{
 			if (services == null) throw new ArgumentNullException(nameof(services));
 			if (type == null) throw new ArgumentNullException(nameof(type));
 			if (instance == null) throw new ArgumentNullException(nameof(instance));
 
 			// Rejestracja instancji na podstawie cyklu życia
-			switch (lifetime)
-			{
-				case ServiceLifetime.Singleton:
-					services.AddSingleton(type, instance);
-					break;
-				case ServiceLifetime.Scoped:
-					services.AddScoped(_ => instance);
-					break;
-				case ServiceLifetime.Transient:
-					services.AddTransient(_ => instance);
-					break;
-				default:
-					throw new ArgumentOutOfRangeException(nameof(lifetime), lifetime, null);
-			}
+
+			services.AddSingleton(type, instance);
+
 
 			return services;
 		}
