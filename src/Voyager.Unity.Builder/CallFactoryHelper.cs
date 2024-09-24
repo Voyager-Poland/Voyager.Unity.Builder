@@ -15,10 +15,29 @@ namespace Voyager.Unity.Builder
 			this.implementationFactory = implementationFactory;
 		}
 
-		internal object Call(IUnityContainer container)
+		public virtual object Call(IUnityContainer container)
 		{
 			var serviceProvider = unity.Resolve<IServiceProvider>();
 			return implementationFactory(serviceProvider);
+		}
+	}
+
+	internal class SingleTOnCallFactoryHelper : CallFactoryHelper
+	{
+		public SingleTOnCallFactoryHelper(IUnityContainer unity, Func<IServiceProvider, object> implementationFactory) : base(unity, implementationFactory)
+		{
+		}
+
+		bool wasCalled = false;
+		object resutl;
+
+		public override object Call(IUnityContainer container)
+		{
+			if (!wasCalled)
+				resutl = base.Call(container);
+			wasCalled = true;
+			return resutl;
+
 		}
 	}
 }

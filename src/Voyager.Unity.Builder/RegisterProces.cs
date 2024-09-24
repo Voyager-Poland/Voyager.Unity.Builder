@@ -19,9 +19,8 @@ namespace Voyager.Unity.Builder
 		{
 			if (description.ImplementationFactory != null)
 			{
-				IFactoryLifetimeManager factoryLifetimeManager = new LifeTimeTransate(description.Lifetime);
-				CallFactoryHelper myCallFactory = new CallFactoryHelper(unity, description.ImplementationFactory);
-				unity.RegisterFactory(description.ServiceType, myCallFactory.Call, factoryLifetimeManager);
+				CallFactoryHelper myCallFactory = description.Lifetime == ServiceLifetime.Singleton ? new SingleTOnCallFactoryHelper(unity, description.ImplementationFactory) : new CallFactoryHelper(unity, description.ImplementationFactory);
+				unity.RegisterFactory(description.ServiceType, myCallFactory.Call);
 			}
 			else if (description.ImplementationType != null)
 				unity.RegisterType(description.ServiceType, description.ImplementationType, GetLifetimeManager(description.Lifetime));

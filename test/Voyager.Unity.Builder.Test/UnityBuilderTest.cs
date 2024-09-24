@@ -48,6 +48,20 @@ namespace Voyager.Unity.Builder.Test
 			TestType<ExampleClass>(result);
 		}
 
+
+		[Test]
+		public void SingletonFunctionType()
+		{
+			serviceDescriptors.AddSingleton<IExampleInterface>(sp =>
+			{
+				return new ExampleClass();
+			});
+			var result = PrepareUnit(serviceDescriptors);
+			TestType<IExampleInterface>(result);
+
+			TwoObjectAreEqual(result);
+		}
+
 		[Test]
 		public void SingletonKeyType()
 		{
